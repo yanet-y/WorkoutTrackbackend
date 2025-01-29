@@ -30,9 +30,17 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    
+    if (!token) {
+      console.log("JWT token generation failed"); 
+      return res.status(500).json({ error: "Error generating token" });
+    }
+    console.log("Login successful, sending token"); 
+
     res.json({ token, email });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Login error:", err); 
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
