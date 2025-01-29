@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';  
-
+const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
 
@@ -7,7 +6,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
       ssl: true,
-      tlsAllowInvalidCertificates: false, 
+      tlsAllowInvalidCertificates: false,
     });
     console.log("Connected to MongoDB");
   } catch (err) {
@@ -16,4 +15,4 @@ const connectDB = async () => {
   }
 };
 
-connectDB();
+module.exports = connectDB;
